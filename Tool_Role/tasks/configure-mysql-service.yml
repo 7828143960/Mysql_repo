@@ -1,0 +1,13 @@
+---
+- name: Copy MySQL systemd service unit
+  template:
+    src: mysql.service.j2
+    dest: /etc/systemd/system/mysql.service
+  become: yes
+  notify: Restart MySQL
+
+- name: Start MySQL service
+  service:
+    name: "{{ mysql_service_name }}"
+    state: started
+  become: yes

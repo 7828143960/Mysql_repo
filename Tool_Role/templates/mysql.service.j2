@@ -1,0 +1,12 @@
+[Unit]
+Description=MySQL Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ mysql_install_dir }}/mysql-5.7.44-linux-glibc2.12-x86_64/bin/mysqld --user=mysql
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

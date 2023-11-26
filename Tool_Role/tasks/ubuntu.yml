@@ -1,0 +1,10 @@
+---
+- name: Install MySQL dependencies on Ubuntu
+  apt:
+    name:
+      - libaio1
+      - libnuma1
+    state: present
+  become: yes
+
+

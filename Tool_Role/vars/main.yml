@@ -1,0 +1,20 @@
+---
+mysql_versions:
+  - { version: "5.7.44" }
+
+mysql_download_url: "https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-5.7.44-linux-glibc2.12-x86_64.tar.gz"
+
+mysql_group: "mysql"
+
+mysql_user: "mysql"
+
+mysql_directories:
+  - { path: "{{ mysql_install_dir }}", owner: "root", mode: "0755" }
+  - { path: "{{ mysql_data_dir }}", owner: "mysql", group: "mysql" , mode: "0755" }
+
+mysql_install_dir: "/usr/local/mysql"
+
+mysql_data_dir: "/usr/local/mysql/data"
+
+mysql_service_name: "mysql.service"
+

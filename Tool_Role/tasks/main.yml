@@ -1,0 +1,56 @@
+---
+- name: Check the OS distribution
+  include_tasks: ubuntu.yml
+  when: ansible_distribution in ['Ubuntu', 'CentOS']
+
+- name: Download MySQL server package using wget
+  command: wget -O /tmp/mysql "{{ mysql_download_url }}"
+
+- name: Create MySQL installation directory if it doesn't exist
+  become: yes
+  file:
+    path: "{{ mysql_install_dir }}"
+    state: directory
+
+- name: Extract MySQL tar archive
+  become: yes
+  unarchive:
+    src: "/tmp/mysql"
+    dest: "{{ mysql_install_dir }}"
+    remote_src: yes
+
+- name: Create MySQL group
+  become: yes
+  group:
+    name: "{{ mysql_group }}"
+
+- name: Create MySQL user
+  become: yes
+  user:
+    name: "{{ mysql_user }}"
+    comment: MySQL Server
+    group: "{{ mysql_group }}"
+    system: yes
+
+- name: Remove existing MySQL data directory
+  command: rm -rf "{{ mysql_data_dir }}"
+  become: yes
+  ignore_errors: yes
+
+- name: Initialize MySQL data directory
+  command: "{{ mysql_install_dir }}/mysql-5.7.44-linux-glibc2.12-x86_64/bin/mysqld --initialize-insecure --user=mysql --datadir={{ mysql_data_dir }}"
+  become: yes
+
+- name: Change ownership of MySQL installation and data directories
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ mysql_directories }}"
+  become: yes
+
+- name: Include Mysql service configuration
+  include_tasks: configure-mysql-service.yml
+
+
+
