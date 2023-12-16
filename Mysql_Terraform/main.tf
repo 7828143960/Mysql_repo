@@ -10,7 +10,7 @@ module "netwoking" {
     igw_name = var.igw_name
     nat_name = var.nat_name
     pub_rt_names = var.pub_rt_names
-    pvt_rt_names = var.pvt_rt_names  
+    pvt_rt_names = var.pvt_rt_names
 }
 
 module "Security" {
@@ -21,7 +21,7 @@ module "Security" {
     sec_grp = var.sec_grp
     key_name = var.key_name
     pub_sub_id = module.netwoking.pub_subnet_id[0]
-    pvt_sub_id = module.netwoking.pri_subnet_id
+    pvt_sub_id = module.netwoking.pvt_subnet_id
     vpc_id = module.netwoking.vpc_id
-  
+
 }
