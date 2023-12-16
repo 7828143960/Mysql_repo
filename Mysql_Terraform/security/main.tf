@@ -1,10 +1,10 @@
 locals {
 #  inbound_ports = [80, 22, 443]
  inbound_ports = [
-  { port = 80, protocol = "tcp" },   
-  { port = 22, protocol = "tcp" },   
-  { port = 443, protocol = "tcp" },  
-  { port = -1, protocol = "icmp" },  
+  { port = 80, protocol = "tcp" },
+  { port = 22, protocol = "tcp" },
+  { port = 443, protocol = "tcp" },
+  { port = -1, protocol = "icmp" },
  ]
  outbound_ports = [0]
  }
@@ -41,7 +41,7 @@ resource "aws_security_group" "sec_grp" {
 resource "aws_instance" "bastion" {
   ami = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
-  key_name = aws_key_pair.key_pair.key_name  
+  key_name = aws_key_pair.key_pair.key_name
   subnet_id = var.pub_sub_id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.sec_grp.id]
@@ -59,7 +59,7 @@ resource "aws_instance" "private-ec2" {
   instance_type = var.instance_type
   key_name = aws_key_pair.key_pair.key_name
   subnet_id = var.pvt_sub_id[count.index]
-  vpc_security_group_ids = [aws_security_group.sq_grp.id]
+  vpc_security_group_ids = [aws_security_group.sec_grp.id]
   root_block_device {
     volume_size = 29
   }
@@ -75,7 +75,7 @@ resource "tls_private_key" "rsa_4096" {
   rsa_bits  = 4096
 }
 
-# Genrate pen Key 
+# Genrate pen Key
 resource "aws_key_pair" "key_pair" {
   key_name   = var.key_name
   public_key = tls_private_key.rsa_4096.public_key_openssh
@@ -86,5 +86,3 @@ resource "local_file" "private_key" {
   content = tls_private_key.rsa_4096.private_key_pem
   filename = var.key_name
 }
-
-
