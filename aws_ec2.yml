@@ -1,10 +1,10 @@
 plugin: aws_ec2
 regions:
-  - "us-east-1"
+  - "ap-south-1"
     #keyed_groups:
     #- key: tags.Name
 filters:
-  tag:Name:
+  tag:DB:
     - mysql
   #instance-state-name : running
 compose:
