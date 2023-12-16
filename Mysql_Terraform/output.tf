@@ -5,7 +5,7 @@ output "pub_subnet_id" {
     value = module.netwoking.pub_subnet_id
 }
 output "pvt_subnet_id" {
-    value = module.netwoking.pri_subnet_id
+    value = module.netwoking.pvt_subnet_id
 }
 output "Instance_id_public" {
     value = module.Security.Instance_id_public
