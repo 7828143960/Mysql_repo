@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/7828143960/Mysql_repo.git'
+               git branch: 'main', credentialsId: '0861634b-bd41-4c60-bece-2a8a0d8e1548', url: 'https://github.com/7828143960/Mysql_repo.git'
             }
         }
         stage('Terraform Init') {
