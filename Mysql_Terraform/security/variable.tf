@@ -1,6 +1,6 @@
 variable "inbound_ports" {
   description = "List of inbound ports and protocols"
-  type        = list(map(number))
+  type        = list(map(any))  # Update the type constraint to allow any type
   default     = [
     { port = 80, protocol = "tcp" },
     { port = 22, protocol = "tcp" },
