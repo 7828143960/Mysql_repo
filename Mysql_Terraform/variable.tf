@@ -195,8 +195,4 @@ variable "key_name" {
   default     = "mysql.pem"
 }
 
-variable "vpc_id" {
-  description = "ID of the VPC for EC2 instances"
-  type        = string
-}
 
