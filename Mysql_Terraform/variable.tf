@@ -156,7 +156,7 @@ variable "instance_type" {
 
 variable "inbound_ports" {
   description = "List of inbound ports and protocols"
-  type        = list(map(number))
+  type        = list(map(any))  
   default     = [
     { port = 80, protocol = "tcp" },
     { port = 22, protocol = "tcp" },
