@@ -1,9 +1,9 @@
 # VPC
 resource "aws_vpc" "mysql_vpc" {
   cidr_block = var.vpc_cidr
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  instance_tenancy = var.tenancy
+  enable_dns_support = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
+  instance_tenancy = var.vpc_tenancy
   tags = {
     Name = var.vpc_name
   }
@@ -11,22 +11,22 @@ resource "aws_vpc" "mysql_vpc" {
 
 # Subnets
 resource "aws_subnet" "public" {
-  count = length(var.pub_subnet_names)
+  count = length(var.pub_sub_names)
   vpc_id = aws_vpc.mysql_vpc.id
   cidr_block = var.pub_cidr[count.index]
-  availability_zone = "ap-south-1${element(["a", "b"], count.index % 2)}"
+  availability_zone = "${var.aws_region}${element(["a", "b"], count.index % 2)}"
   tags = {
-    Name = var.pub_subnet_names[count.index]
+    Name = var.pub_sub_names[count.index]
   }
 }
 
 resource "aws_subnet" "private" {
-  count = length(var.pvt_subnet_names)
+  count = length(var.pvt_sub_names)
   vpc_id = aws_vpc.mysql_vpc.id
   cidr_block = var.pvt_cidr[count.index]
-  availability_zone = "ap-south-1${element(["a", "b"], count.index % 2)}"
+  availability_zone = "${var.aws_region}${element(["a", "b"], count.index % 2)}"
   tags = {
-    Name = var.pvt_subnet_names[count.index]
+    Name = var.pvt_sub_names[count.index]
   }
 }
 
@@ -59,15 +59,15 @@ resource "aws_nat_gateway" "nat_gtw" {
 resource "aws_route_table" "pub_rt" {
   vpc_id = aws_vpc.mysql_vpc.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.default_route_cidr_block
     gateway_id = aws_internet_gateway.igw.id
   }
   route {
     cidr_block = var.vpc_cidr
-    gateway_id = "local"
+    gateway_id = var.local_gateway_id
   }
   route {
-    cidr_block = "172.31.0.0/16"
+    cidr_block = var.vpc_peering_cidr_block
     vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   }
   tags = {
@@ -79,15 +79,15 @@ resource "aws_route_table" "pub_rt" {
 resource "aws_route_table" "pvt_rt" {
   vpc_id = aws_vpc.mysql_vpc.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.default_route_cidr_block
     nat_gateway_id = aws_nat_gateway.nat_gtw.id
   }
   route {
     cidr_block = var.vpc_cidr
-    gateway_id = "local"
+    gateway_id = var.local_gateway_id
   }
   route {
-    cidr_block = "172.31.0.0/16"
+    cidr_block = var.vpc_peering_cidr_block
     vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   }
   tags = {
@@ -98,32 +98,33 @@ resource "aws_route_table" "pvt_rt" {
 
 #aws_route_table_association
 resource "aws_route_table_association" "public" {
-  count = length(var.pub_subnet_names)
+  count = length(var.pub_sub_names)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.pub_rt.id
 }
 resource "aws_route_table_association" "private" {
-  count = length(var.pvt_subnet_names)
+  count = length(var.pvt_sub_names)
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.pvt_rt.id
 }
 
-#VPC Peering
+#VPC Peering 
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id          = "vpc-092998cefff1ac345"
+  vpc_id          = var.peering_vpc_id
   peer_vpc_id     = aws_vpc.mysql_vpc.id
-  auto_accept     = true
+  auto_accept     = var.auto_accept_peering
 
   tags = {
-    Name = "VPC-Peering"
+    Name = var.vpc_peering_name
   }
 }
 
 resource "aws_route" "Existing_route" {
-  route_table_id            = "rtb-0705354f1e2e201e3"
-  destination_cidr_block    = var.vpc_cidr
+  route_table_id            = var.route_table_id
+  destination_cidr_block    = var.vpc_cidr 
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
+
 
