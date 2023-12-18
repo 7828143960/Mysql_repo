@@ -1,9 +1,14 @@
 output "Instance_id_public" {
-    value = aws_instance.bastion[*].id
+  description = "IDs of the public EC2 instances"
+  value       = aws_instance.bastion[*].id
 }
+
 output "Instance_id_private" {
-    value = aws_instance.private-ec2[*].id
+  description = "IDs of the private EC2 instances"
+  value       = aws_instance.private-ec2[*].id
 }
+
 output "Bastion_Public_IP" {
-    value = aws_instance.bastion.public_ip
+  description = "Public IP address of the bastion EC2 instance"
+  value       = aws_instance.bastion.public_ip
 }
