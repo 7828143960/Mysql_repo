@@ -20,9 +20,9 @@ resource "aws_security_group" "sec_grp" {
  dynamic "egress" {
   for_each = local.outbound_ports
   content {
-   from_port = egress.value
-   to_port = egress.value
-   protocol = "-1"
+   from_port = egress.value.port
+   to_port = egress.value.port
+   protocol = egress.value.protocol
    cidr_blocks = var.egress_cidr_blocks
   }
  }
