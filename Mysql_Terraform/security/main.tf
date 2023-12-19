@@ -59,7 +59,7 @@ resource "aws_instance" "private-ec2" {
   }
   tags = {
     Name = var.pvt_instance_name[count.index]
-    DB = "mysql"
+    DB = var.pvt_instance_name_02
   }
 }
 
