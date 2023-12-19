@@ -39,6 +39,12 @@ variable "pvt_instance_name" {
   default     = ["mysql-master", "mysql-slave"]
 }
 
+variable "pvt_instance_name_02" {
+  description = "Name of private EC2 instance"
+  type        = string
+  default     = mysql
+}
+
 variable "instance_type" {
   description = "Type of EC2 instance"
   type        = string
