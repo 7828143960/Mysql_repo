@@ -27,6 +27,7 @@ module "Security" {
     source = "./security"
     bastion_instance_name = var.bastion_instance_name
     pvt_instance_name = var.pvt_instance_name
+    pvt_instance_name_02 = var.pvt_instance_name_02
     instance_type = var.instance_type
     sec_grp = var.sec_grp
     key_name = var.key_name
