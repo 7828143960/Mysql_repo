@@ -10,9 +10,11 @@ variable "inbound_ports" {
 }
 
 variable "outbound_ports" {
-  description = "List of outbound ports"
-  type        = list(number)
-  default     = [0]
+  description = "List of outbound ports and protocols"
+  type        = list(map(any))
+  default     = [
+    { port = 0, protocol = "-1" },
+  ]
 }
 
 variable "bastion_instance_name" {
