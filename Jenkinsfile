@@ -86,12 +86,18 @@ pipeline {
 
     post {
         success {
-            // Actions to take if the pipeline is successful
-            echo 'Succeeded!'
+            script {
+                if (params.ACTION == 'apply') {
+                    emailext body: 'The build ${BUILD_NUMBER} is completed with status successful and Created Infra and Deploy Mysql on Target Host', subject: 'Build status: successful (apply)', to: 'jaiswalshreya37@gmail.com'
+                } else if (params.ACTION == 'destroy') {
+                    emailext body: 'The build ${BUILD_NUMBER} is completed with status successful and Destroy all infra ', subject: 'Build status: successful (destroy)', to: 'jaiswalshreya37@gmail.com'
+                }
+            }
         }
         failure {
-            // Actions to take if the pipeline fails
-            echo 'Failed!'
+            script {
+                emailext body: 'The build ${BUILD_NUMBER} is completed with status Failure', subject: 'Build status: Failed', to: 'vk838408@gmail.com'
+            }
         }
     }
 }
