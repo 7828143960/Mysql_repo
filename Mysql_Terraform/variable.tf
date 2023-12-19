@@ -82,6 +82,12 @@ variable "pvt_instance_name" {
   default     = ["mysql-master", "mysql-slave"]
 }
 
+variable "pvt_instance_name_02" {
+  description = "Name of private EC2 instance"
+  type        = string
+  default     = mysql
+}
+
 variable "igw_name" {
   description = "Name of the Internet Gateway"
   type        = string
