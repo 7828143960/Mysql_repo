@@ -7,4 +7,8 @@
     state: present
   become: yes
 
+- name: Update dynamic linker cache
+  command: ldconfig
+  become: yes
+
 
