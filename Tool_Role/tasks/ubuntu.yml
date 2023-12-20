@@ -3,9 +3,19 @@
     name:
       - libaio1
       - libnuma1
-      - libncurses5
-    state: present
+      - libtinfo5  # Use libtinfo5 instead of libncurses5
+
+- name: Create symbolic link for libncurses.so.5
+  command: ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
   become: yes
+  args:
+    creates: /lib/x86_64-linux-gnu/libncurses.so.5
+
+- name: Create symbolic link for libtinfo.so.5
+  command: ln -s /lib/x86_64-linux-gnu/libtinfo.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
+  become: yes
+  args:
+    creates: /lib/x86_64-linux-gnu/libtinfo.so.5
 
 - name: Update dynamic linker cache
   command: ldconfig
@@ -18,5 +28,6 @@
 - name: Display MySQL version
   debug:
     var: mysql_version_output.stdout_lines
+
 
 
