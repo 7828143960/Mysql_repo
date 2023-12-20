@@ -45,9 +45,9 @@ pipeline {
                 sh """
                     cd ${env.TERRAFORM_WORKSPACE}
                     terraform apply -auto-approve
-                    sudo cp ${env.TERRAFORM_WORKSPACE}/mysql.pem ${env.INSTALL_WORKSPACE}
-                    sudo chown jenkins:jenkins ${env.INSTALL_WORKSPACE}/mysql.pem
-                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql.pem
+                    sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key ${env.INSTALL_WORKSPACE}
+                    sudo chown jenkins:jenkins ${env.INSTALL_WORKSPACE}/mysql_key
+                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql_key
                 """
             }
         }
