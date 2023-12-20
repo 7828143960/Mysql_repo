@@ -96,7 +96,7 @@ pipeline {
         }
         failure {
             script {
-                emailext body: 'The build ${BUILD_NUMBER} is completed with status Failure', subject: 'Build status: Failed', to: 'vk838408@gmail.com'
+                emailext body: 'The build ${BUILD_NUMBER} is completed with status Failure', subject: 'Build status: Failed', to: 'jaiswalshreya37@gmail.com'
             }
         }
     }
