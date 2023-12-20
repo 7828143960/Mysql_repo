@@ -3,7 +3,7 @@
     name:
       - libaio1
       - libnuma1
-      - libtinfo6  # Use libtinfo5 instead of libncurses5
+      - libtinfo6  # Use libtinfo6 for Ubuntu 22.04
 
 - name: Create symbolic link for libncurses.so.5
   command: ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
@@ -28,6 +28,3 @@
 - name: Display MySQL version
   debug:
     var: mysql_version_output.stdout_lines
-
-
-
