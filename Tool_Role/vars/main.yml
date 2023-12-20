@@ -18,5 +18,5 @@ mysql_data_dir: "/usr/local/mysql/data"
 
 mysql_service_name: "mysql.service"
 
-mysql_client_version: "5.7"
+
 
