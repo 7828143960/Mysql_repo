@@ -21,10 +21,6 @@
   command: ldconfig
   become: yes
 
-- name: Debug Information
-  debug:
-    msg: "MySQL Install Directory: {{ mysql_install_dir }}"
-
 - name: Check MySQL version
   command: "/usr/local/mysql/mysql-5.7.44-linux-glibc2.12-x86_64/bin/mysql --version"
   register: mysql_version_output
