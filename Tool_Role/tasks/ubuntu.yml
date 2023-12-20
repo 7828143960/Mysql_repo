@@ -3,12 +3,7 @@
     name:
       - libaio1
       - libnuma1
-    state: present
-  become: yes
-
-- name: Install libncurses5 compatibility libraries on Ubuntu 
-  apt:
-    name: libncurses5-compat-libs
+      - libncurses5
     state: present
   become: yes
 
