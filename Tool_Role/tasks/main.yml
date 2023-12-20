@@ -48,25 +48,7 @@
     mode: "{{ item.mode }}"
   loop: "{{ mysql_directories }}"
   become: yes
-
-- name: Install MySQL client
-  become: yes
-  apt:
-    name: "mysql-client-{{ mysql_client_version }}"
-    state: present
-
-- name: Create symbolic links for libncurses and libtinfo
-  become: yes
-  file:
-    src: "{{ libncurses_source }}"
-    dest: "{{ libncurses_dest }}"
-    state: link
-  become: yes
-  file:
-    src: "{{ libtinfo_source }}"
-    dest: "{{ libtinfo_dest }}"
-    state: link
-
+  
 - name: Include Mysql service configuration
   include_tasks: configure-mysql-service.yml
 
