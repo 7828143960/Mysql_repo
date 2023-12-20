@@ -49,12 +49,6 @@
   loop: "{{ mysql_directories }}"
   become: yes
 
-- name: Install MySQL client
-  become: yes
-  apt:
-    name: "mysql-client-{{ mysql_client_version }}"
-    state: present 
-
 - name: Include Mysql service configuration
   include_tasks: configure-mysql-service.yml
 
