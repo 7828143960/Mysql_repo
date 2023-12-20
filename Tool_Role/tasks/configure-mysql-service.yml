@@ -11,3 +11,12 @@
     name: "{{ mysql_service_name }}"
     state: started
   become: yes
+  
+- name: Check MySQL version
+  command: mysql --version
+  register: mysql_version_output
+
+- name: Display MySQL version
+  debug:
+    var: mysql_version_output.stdout_lines
+
