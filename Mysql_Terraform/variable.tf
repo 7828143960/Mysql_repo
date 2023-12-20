@@ -85,7 +85,7 @@ variable "pvt_instance_name" {
 variable "pvt_instance_name_02" {
   description = "Name of private EC2 instance"
   type        = string
-  default     = mysql
+  default     = "mysql"
 }
 
 variable "igw_name" {
