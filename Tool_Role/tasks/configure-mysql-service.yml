@@ -12,11 +12,4 @@
     state: started
   become: yes
   
-- name: Check MySQL version
-  command: "{{ mysql_install_dir }}/mysql-5.7.44-linux-glibc2.12-x86_64/bin/mysql --version"
-  register: mysql_version_output
-
-- name: Display MySQL version
-  debug:
-    var: mysql_version_output.stdout_lines
 
