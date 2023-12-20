@@ -84,7 +84,7 @@ variable "egress_cidr_blocks" {
 variable "key_name" {
   description = "Name of the key pair for EC2 instances"
   type        = string
-  default     = "mysql.pem"
+  default     = "mysql_key"
 }
 
 variable "pub_sub_id" {
