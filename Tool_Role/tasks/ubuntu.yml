@@ -3,7 +3,7 @@
     name:
       - libaio1
       - libnuma1
-      - libtinfo6  # Use libtinfo6 for Ubuntu 22.04
+      - libtinfo6  
     state: present
   become: yes
 
