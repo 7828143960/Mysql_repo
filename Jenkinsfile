@@ -49,10 +49,10 @@ pipeline {
                     sudo scp -o StrictHostKeyChecking=no -i "mysql_key.pem" "mysql_key.pem" ubuntu@`cat Ip.txt | sed 's/"//g'`:/home/ubuntu/
                     sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key.pem ${env.INSTALL_WORKSPACE}
                     sudo chown jenkins:jenkins ${env.INSTALL_WORKSPACE}/mysql_key.pem
-                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql_key.pem  # Set read only for the owner
+                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql_key.pem  
                     sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key.pem /home/ubuntu/
                     sudo chown ubuntu:ubuntu /home/ubuntu/mysql_key.pem
-                    sudo chmod 400 /home/ubuntu/mysql_key.pem  # Set read only for the owner
+                    sudo chmod 400 /home/ubuntu/mysql_key.pem 
                 """
 
             }
