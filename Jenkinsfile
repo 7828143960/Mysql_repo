@@ -53,7 +53,6 @@ pipeline {
                     sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key.pem /home/ubuntu/
                     sudo chmod 400 /home/ubuntu/mysql_key.pem
                     sudo chown ubuntu:ubuntu /home/ubuntu/mysql_key.pem
-                    sudo chmod 400 /home/ubuntu/mysql_key.pem
                 """
             }
         }
