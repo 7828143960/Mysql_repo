@@ -29,3 +29,9 @@
 - name: Update dynamic linker cache
   command: ldconfig
   become: yes
+
+- name: Add MySQL bin directory to PATH
+  lineinfile:
+    path: /etc/environment
+    line: 'PATH=$PATH:/usr/local/mysql/mysql-5.7.44-linux-glibc2.12-x86_64/bin'
+  become: yes
