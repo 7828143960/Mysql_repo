@@ -45,15 +45,16 @@ pipeline {
                sh """
                     cd ${env.TERRAFORM_WORKSPACE}
                     terraform apply -auto-approve
-                    terraform output IP_Public_Bastion >Ip.txt
+                    terraform output IP_Public_Bastion > Ip.txt
                     sudo scp -o StrictHostKeyChecking=no -i "mysql_key.pem" "mysql_key.pem" ubuntu@`cat Ip.txt | sed 's/"//g'`:/home/ubuntu/
                     sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key.pem ${env.INSTALL_WORKSPACE}
                     sudo chown jenkins:jenkins ${env.INSTALL_WORKSPACE}/mysql_key.pem
-                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql_key.pem
+                    sudo chmod 400 ${env.INSTALL_WORKSPACE}/mysql_key.pem  # Set read only for the owner
                     sudo cp ${env.TERRAFORM_WORKSPACE}/mysql_key.pem /home/ubuntu/
-                    sudo chmod 400 /home/ubuntu/mysql_key.pem
                     sudo chown ubuntu:ubuntu /home/ubuntu/mysql_key.pem
+                    sudo chmod 400 /home/ubuntu/mysql_key.pem  # Set read only for the owner
                 """
+
             }
         }
 
