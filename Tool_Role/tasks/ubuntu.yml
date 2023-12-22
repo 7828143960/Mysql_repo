@@ -1,9 +1,10 @@
+---
 - name: Install MySQL dependencies on Ubuntu
   apt:
     name:
       - libaio1
       - libnuma1
-      - libtinfo6  
+      - libtinfo6
     state: present
   become: yes
 
@@ -19,8 +20,12 @@
   args:
     creates: /lib/x86_64-linux-gnu/libtinfo.so.5
 
+- name: Create symbolic link for MySQL executable
+  command: ln -s /usr/local/mysql/mysql-5.7.44-linux-glibc2.12-x86_64/bin/mysql /usr/local/bin/mysql
+  become: yes
+  args:
+    creates: /usr/local/bin/mysql
+
 - name: Update dynamic linker cache
   command: ldconfig
   become: yes
-
-
